@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
+    private boolean strumming;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,5 +36,27 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    
+    //Call this each time the song checks for user activity
+    public void beat(){
+        if(stumming){
+            strumming = false;
+            progress();
+        }else{
+            pause();
+        }
+    }
+    //Called by strum action listener
+    public void strum(){
+        strumming = true;
+    }
+    //Song continues playing, progress advances
+    public void progress(){
+        //TODO implement song progression
+    }
+    //Song is paused, halt progress
+    public void pause(){
+        //TODO implement song pausing
     }
 }
