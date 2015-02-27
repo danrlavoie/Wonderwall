@@ -12,10 +12,15 @@ import android.view.ViewGroup;
 import android.view.MotionEvent;
 import android.os.Build;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class SongActivity extends ActionBarActivity {
     private boolean strumming;
     float x1,x2;
+    int period = 1000; // repeat every 10 sec.
+    Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,12 @@ public class SongActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        timer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run() {
+                beat();
+            }
+        }, 0,period);
     }
     public boolean onTouchEvent(MotionEvent touchevent)
     {
@@ -44,6 +55,7 @@ public class SongActivity extends ActionBarActivity {
                 //if left to right sweep event on screen
                 if (x1 != x2) {
                     strum();
+                    System.out.println("Swipe detected");
                 }
             }
         }
@@ -72,9 +84,7 @@ public class SongActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-        //Call this each time the song checks for user activity
+    //Call this each time the song checks for user activity
     public void beat(){
         if(strumming){
             strumming = false;
@@ -90,10 +100,12 @@ public class SongActivity extends ActionBarActivity {
     //Song continues playing, progress advances
     public void progress(){
         //TODO implement song progression
+        System.out.println("Song playing");
     }
     //Song is paused, halt progress
     public void pause(){
         //TODO implement song pausing
+        System.out.println("Song stopped");
     }
     /**
      * A placeholder fragment containing a simple view.
