@@ -13,4 +13,10 @@
         android:layout_marginRight="79dp"
         android:layout_marginEnd="79dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/play_song"
+        android:onClick="playSong" />
+
 </RelativeLayout>
