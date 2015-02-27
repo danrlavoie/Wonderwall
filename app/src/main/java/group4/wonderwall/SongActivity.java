@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.MotionEvent;
 import android.os.Build;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,6 +62,15 @@ public class SongActivity extends ActionBarActivity {
             }
         }
         return false;
+    }
+
+    public boolean incrementScore(View view){
+        TextView updateThis = (TextView)findViewById(R.id.score);
+        Integer curr =Integer.getInteger(updateThis.getText().toString());
+        curr++;
+        updateThis.setText(curr.toString());
+
+        return true;
     }
 
     @Override
