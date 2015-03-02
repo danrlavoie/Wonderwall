@@ -1,5 +1,6 @@
 package group4.wonderwall;
 
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,23 +12,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.MotionEvent;
 import android.os.Build;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-public class SongActivity extends ActionBarActivity {
+/**
+ * SongActivity class contains the functionality to play song.
+ * It detects user swipes on the screen and plays song.
+ */
+public class SongActivity extends ActionBarActivity { //implements View.OnClickListener{
     private boolean strumming;
     float x1,x2;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
 
+    /**
+     * Initialize the SongActivity, loads views, data binding.
+     * @param savedInstanceState (If app is re-initialized after shut-down, Bundle contains most recent saved state data)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_song);
+        setContentView(R.layout.activity_song); //places the UI for this activity here
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -40,6 +47,12 @@ public class SongActivity extends ActionBarActivity {
             }
         }, 0,period);
     }
+
+    /**
+     * Detects a touch screen swipe. Logs a left or a right swipe.
+     * @param touchevent (the touch screen event being processed)
+     * @return boolean (if screen was touched or not)
+     */
     public boolean onTouchEvent(MotionEvent touchevent)
     {
         switch (touchevent.getAction())
@@ -53,17 +66,26 @@ public class SongActivity extends ActionBarActivity {
             case MotionEvent.ACTION_UP:
             {
                 x2 = touchevent.getX();
-
                 //if left to right sweep event on screen
-                if (x1 != x2) {
-                    strum();
-                    System.out.println("Swipe detected");
+                if (x1 < x2)
+                {
+                    System.out.println("Left to Right Swipe");
+                }
+                // if right to left sweep event on screen
+                if (x1 > x2)
+                {
+                    System.out.println("Right to Left Swipe");
                 }
             }
         }
         return false;
     }
 
+    /**
+     * Increments the user score
+     * @param view (View to be updated)
+     * @return boolean
+     */
     public boolean incrementScore(View view){
         TextView updateThis = (TextView)findViewById(R.id.score);
         Integer curr =Integer.getInteger(updateThis.getText().toString());
@@ -91,11 +113,12 @@ public class SongActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    //Call this each time the song checks for user activity
+    /**
+     * Call this each time the song checks for user activity
+     */
     public void beat(){
         if(strumming){
             strumming = false;
@@ -104,28 +127,48 @@ public class SongActivity extends ActionBarActivity {
             pause();
         }
     }
-    //Called by strum action listener
+
+    /**
+     * Called by strum action listener
+     */
     public void strum(){
         strumming = true;
     }
-    //Song continues playing, progress advances
+
+    /**
+     * Song continues playing, progress advances
+     */
     public void progress(){
         //TODO implement song progression
         System.out.println("Song playing");
     }
-    //Song is paused, halt progress
+
+    /**
+     * Song is paused, halt progress
+     */
     public void pause(){
         //TODO implement song pausing
         System.out.println("Song stopped");
     }
+
     /**
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
 
+        /**
+         * Public constructor
+         */
         public PlaceholderFragment() {
         }
 
+        /**
+         * Initializes the fragment view
+         * @param inflater
+         * @param container
+         * @param savedInstanceState
+         * @return
+         */
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
