@@ -11,12 +11,23 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="79dp"
-        android:layout_marginEnd="79dp" />
+        android:layout_marginEnd="79dp"
+        android:id="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/play_song"
         android:onClick="playSong" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instrument"
+        android:id="@+id/switch1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="42dp" />
 
 </RelativeLayout>
