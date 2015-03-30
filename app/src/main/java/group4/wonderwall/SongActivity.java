@@ -122,6 +122,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void beat(){
         if(strumming){
             strumming = false;
+            incrementScore(this.getWindow().getDecorView());
             progress();
         }else{
             pause();
@@ -175,5 +176,31 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
             View rootView = inflater.inflate(R.layout.fragment_song, container, false);
             return rootView;
         }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause(); //Always call the super
+        //pause the timer and song
+        this.timer.cancel();
+        this.timer = null;
+        System.out.println("I have paused and you should not see the timer incrementing");
+
+        //also need to stop the song
+    }
+    @Override
+    public void onResume(){
+        super.onResume(); //Always call the superclass first
+        System.out.println("I have resumed and you should now see this counting again");
+        //start the timer again since we are resuming the task
+        if (this.timer == null) {
+            this.timer = new Timer();
+            this.timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    beat();
+                }
+            }, 0, period);
+        }//if
     }
 }
