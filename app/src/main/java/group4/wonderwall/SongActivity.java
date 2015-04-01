@@ -25,6 +25,7 @@ import java.util.TimerTask;
 public class SongActivity extends ActionBarActivity { //implements View.OnClickListener{
     private boolean strumming;
     float x1,x2;
+    Integer score = 0;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
 
@@ -84,14 +85,12 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
 
     /**
      * Increments the user score
-     * @param view (View to be updated)
      * @return boolean
      */
-    public boolean incrementScore(View view){
+    public boolean incrementScore(){
         TextView updateThis = (TextView)findViewById(R.id.score);
-        Integer curr =Integer.getInteger(updateThis.getText().toString());
-        curr++;
-        updateThis.setText(curr.toString());
+        score++;
+        updateThis.setText(score.toString());
 
         return true;
     }
@@ -123,7 +122,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void beat(){
         if(strumming){
             strumming = false;
-            incrementScore(this.getWindow().getDecorView());
             progress();
         }else{
             pause();
@@ -134,6 +132,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * Called by strum action listener
      */
     public void strum(){
+
         strumming = true;
     }
 
@@ -143,6 +142,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void progress(){
         //TODO implement song progression
         System.out.println("Song playing");
+        incrementScore();
     }
 
     /**
