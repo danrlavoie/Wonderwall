@@ -12,5 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/score"
-        android:hint="000"/>
+        android:text="000"
+        android:textSize="50dp"/>
 </FrameLayout>
