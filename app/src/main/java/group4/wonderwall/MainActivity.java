@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
+    public void onInstrumentSelect(View view){
+    //ToDo Listener for instrument change
+    }
 }

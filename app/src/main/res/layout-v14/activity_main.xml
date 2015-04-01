@@ -16,30 +16,44 @@
         android:id="@+id/button"
         android:textSize="35dp"
         android:background="#ff66ff23" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/button"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="42dp"
+        android:gravity="bottom"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="false"
+        android:weightSum="1">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Guitar"
+            android:id="@+id/guitarButton"
+            android:checked="true"
+            android:textColor="#ffffffff"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_gravity="left"
+            android:onClick="onInstrumentSelect"
+            android:layout_weight=".5" />
+
+        <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:text="Bass"
         android:id="@+id/bassButton"
         android:checked="false"
         android:textColor="#ffffffff"
-        android:textSize="25dp"
-        android:layout_alignTop="@+id/guitarButton"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
+        android:textSize="25sp"
+            android:layout_gravity="right"
+            android:textStyle="bold"
+            android:onClick="onInstrumentSelect"
+            android:layout_weight=".5" />
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guitar"
-        android:id="@+id/guitarButton"
-        android:checked="true"
-        android:textColor="#ffffffff"
-        android:textSize="25dp"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginTop="83dp" />
-
+    </RadioGroup>
 </RelativeLayout>
