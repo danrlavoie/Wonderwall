@@ -24,6 +24,7 @@ import java.util.TimerTask;
 public class SongActivity extends ActionBarActivity { //implements View.OnClickListener{
     private boolean strumming;
     float x1,x2;
+    Integer score = 0;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
 
@@ -87,9 +88,8 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public boolean incrementScore(){
         TextView updateThis = (TextView)findViewById(R.id.score);
-        Integer curr =Integer.parseInt(updateThis.getText().toString());
-        curr++;
-        updateThis.setText(curr.toString());
+        score++;
+        updateThis.setText(score.toString());
 
         return true;
     }
