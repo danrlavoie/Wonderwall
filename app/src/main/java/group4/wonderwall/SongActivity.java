@@ -1,6 +1,7 @@
 package group4.wonderwall;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -177,6 +178,9 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
             return rootView;
         }
     }
+    public void quit(){
+        finish();
+    }
 
     @Override
     public void onPause(){
@@ -185,7 +189,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         this.timer.cancel();
         this.timer = null;
         System.out.println("I have paused and you should not see the timer incrementing");
-
+        finish();
         //also need to stop the song
     }
     @Override
