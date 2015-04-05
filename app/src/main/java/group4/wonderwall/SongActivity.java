@@ -15,6 +15,10 @@ import android.view.MotionEvent;
 import android.os.Build;
 import android.widget.TextView;
 
+import android.widget.RelativeLayout;
+import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,6 +29,7 @@ import java.util.TimerTask;
 public class SongActivity extends ActionBarActivity { //implements View.OnClickListener{
     private boolean strumming;
     float x1,x2;
+    Integer score = 0;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
 
@@ -36,6 +41,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song); //places the UI for this activity here
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -84,14 +90,12 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
 
     /**
      * Increments the user score
-     * @param view (View to be updated)
      * @return boolean
      */
-    public boolean incrementScore(View view){
+    public boolean incrementScore(){
         TextView updateThis = (TextView)findViewById(R.id.score);
-        Integer curr =Integer.getInteger(updateThis.getText().toString());
-        curr++;
-        updateThis.setText(curr.toString());
+        score++;
+        updateThis.setText(score.toString());
 
         return true;
     }
@@ -123,7 +127,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void beat(){
         if(strumming){
             strumming = false;
-            incrementScore(this.getWindow().getDecorView());
             progress();
         }else{
             pause();
@@ -134,6 +137,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * Called by strum action listener
      */
     public void strum(){
+
         strumming = true;
     }
 
@@ -143,6 +147,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void progress(){
         //TODO implement song progression
         System.out.println("Song playing");
+        incrementScore();
     }
 
     /**
@@ -174,8 +179,27 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_song, container, false);
-            return rootView;
+
+            //code that gets the instrument selected and changes the background image
+            String inst = MainActivity.instrument;
+            if(inst.equals("Guitar")){
+                Resources res = getResources();
+                Drawable drawableG = res.getDrawable(R.drawable.guitar);
+                rootView.setBackground(drawableG);
+                System.out.println("Guitar selected");
+                return rootView;
+            }
+            else if(inst.equals("Bass")){
+                Resources res = getResources();
+                Drawable drawableB = res.getDrawable(R.drawable.bass);
+                rootView.setBackground(drawableB);
+                System.out.println("Bass selected");
+                return rootView;
+            }
+            return null;
+
         }
     }
     public void quit(){
