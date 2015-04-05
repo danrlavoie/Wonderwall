@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Wonderwall</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Start Strumming!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_song">SongActivity</string>
     <string name="play_song">Play the Song</string>

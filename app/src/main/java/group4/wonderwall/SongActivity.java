@@ -15,6 +15,10 @@ import android.view.MotionEvent;
 import android.os.Build;
 import android.widget.TextView;
 
+import android.widget.RelativeLayout;
+import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,6 +41,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song); //places the UI for this activity here
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -174,8 +179,27 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_song, container, false);
-            return rootView;
+
+            //code that gets the instrument selected and changes the background image
+            String inst = MainActivity.instrument;
+            if(inst.equals("Guitar")){
+                Resources res = getResources();
+                Drawable drawableG = res.getDrawable(R.drawable.guitar);
+                rootView.setBackground(drawableG);
+                System.out.println("Guitar selected");
+                return rootView;
+            }
+            else if(inst.equals("Bass")){
+                Resources res = getResources();
+                Drawable drawableB = res.getDrawable(R.drawable.bass);
+                rootView.setBackground(drawableB);
+                System.out.println("Bass selected");
+                return rootView;
+            }
+            return null;
+
         }
     }
     public void quit(){
