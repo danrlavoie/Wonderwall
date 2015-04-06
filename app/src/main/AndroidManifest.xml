@@ -20,6 +20,10 @@
             android:name=".SongActivity"
             android:label="@string/title_activity_song" >
         </activity>
+        <activity
+            android:name=".SongCompleted"
+            android:label="@string/title_activity_song_completed" >
+        </activity>
     </application>
 
 </manifest>
