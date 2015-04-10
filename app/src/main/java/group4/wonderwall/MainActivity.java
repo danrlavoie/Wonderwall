@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, SongActivity.class);
         //create the intent and start the activity
         startActivity(intent);
+        finish();
 
 
     }

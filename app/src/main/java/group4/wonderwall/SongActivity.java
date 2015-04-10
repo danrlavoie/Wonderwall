@@ -140,6 +140,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void strum(){
 
         strumming = true;
+        progress();
     }
 
     /**
@@ -239,6 +240,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         String message = score.toString();
         intent.putExtra(SCORE, message);
         startActivity(intent);
+        finish();
     }
 
 
