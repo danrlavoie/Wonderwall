@@ -24,6 +24,10 @@
             android:name="group4.wonderwall.SongChooserActivity"
             android:label="@string/title_activity_song_chooser" >
         </activity>
+        <activity
+            android:name=".SongCompleted"
+            android:label="@string/title_activity_song_completed" >
+        </activity>
     </application>
 
 </manifest>

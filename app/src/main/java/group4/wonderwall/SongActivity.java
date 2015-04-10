@@ -53,6 +53,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     //activity and playback pause flags
     private boolean paused=false, playbackPaused=false;
 
+    public final static String SCORE = "edu.rit.Wonderwall.SCORE";
     //connect to the service
     private ServiceConnection musicConnection = new ServiceConnection(){
 
@@ -144,7 +145,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         TextView updateThis = (TextView)findViewById(R.id.score);
         score++;
         updateThis.setText(score.toString());
-
         return true;
     }
 
@@ -299,4 +299,14 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         musicService=null;
         super.onDestroy();
     }
+
+    public void songCompleted(View view) {
+        Intent intent = new Intent(this, SongCompleted.class);
+        //create the intent and start the activity
+        String message = score.toString();
+        intent.putExtra(SCORE, message);
+        startActivity(intent);
+    }
+
+
 }
