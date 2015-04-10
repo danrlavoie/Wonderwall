@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
@@ -23,6 +24,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //click the guitar button on app start
+        RadioButton rb1 = (RadioButton) findViewById(R.id.radioGuitar);
+        rb1.performClick();
 
     }
 
@@ -30,7 +34,6 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, SongActivity.class);
         //create the intent and start the activity
         startActivity(intent);
-
 
     }
 
