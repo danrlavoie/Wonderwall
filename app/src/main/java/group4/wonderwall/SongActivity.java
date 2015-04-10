@@ -1,7 +1,11 @@
 package group4.wonderwall;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -22,6 +26,11 @@ import android.content.res.Resources;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import group4.wonderwall.MainActivity;
+import group4.wonderwall.MusicController;
+import group4.wonderwall.MusicService;
+import group4.wonderwall.R;
+
 /**
  * SongActivity class contains the functionality to play song.
  * It detects user swipes on the screen and plays song.
@@ -30,9 +39,37 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     private boolean strumming;
     float x1,x2;
     Integer score = 0;
-    int period = 1000; // repeat every 10 sec.
+    int period = 10000; // repeat every 10 sec.
     Timer timer = new Timer();
+    //service
+    private MusicService musicService;
+    private Intent playIntent;
+    //binding
+    private boolean musicBound=false;
 
+    //controller
+    private MusicController controller;
+
+    //activity and playback pause flags
+    private boolean paused=false, playbackPaused=false;
+
+    //connect to the service
+    private ServiceConnection musicConnection = new ServiceConnection(){
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
+            //get service
+            musicService = binder.getService();
+            //pass list
+            musicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicBound = false;
+        }
+    };
     /**
      * Initialize the SongActivity, loads views, data binding.
      * @param savedInstanceState (If app is re-initialized after shut-down, Bundle contains most recent saved state data)
@@ -42,11 +79,21 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song); //places the UI for this activity here
 
+        if(playIntent==null){
+            playIntent = new Intent(this, MusicService.class);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+            startService(playIntent);
+        }
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
@@ -54,7 +101,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
             }
         }, 0,period);
     }
-
     /**
      * Detects a touch screen swipe. Logs a left or a right swipe.
      * @param touchevent (the touch screen event being processed)
@@ -76,11 +122,13 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                 //if left to right sweep event on screen
                 if (x1 < x2)
                 {
+                    incrementScore();
                     System.out.println("Left to Right Swipe");
                 }
                 // if right to left sweep event on screen
                 if (x1 > x2)
                 {
+                    incrementScore();
                     System.out.println("Right to Left Swipe");
                 }
             }
@@ -148,6 +196,11 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         //TODO implement song progression
         System.out.println("Song playing");
         incrementScore();
+        if (musicService != null) {
+            if (!musicService.isPng()) {
+                musicService.go();
+            }
+        }
     }
 
     /**
@@ -155,6 +208,11 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public void pause(){
         //TODO implement song pausing
+        if (musicService != null) {
+            if (musicService.isPng()) {
+                musicService.pausePlayer();
+            }
+        }
         System.out.println("Song stopped");
     }
 
@@ -213,6 +271,9 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         this.timer.cancel();
         this.timer = null;
         System.out.println("I have paused and you should not see the timer incrementing");
+        if (musicService.isPng()) {
+            musicService.pausePlayer();
+        }
         finish();
         //also need to stop the song
     }
@@ -229,6 +290,13 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                     beat();
                 }
             }, 0, period);
-        }//if
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(playIntent);
+        musicService=null;
+        super.onDestroy();
     }
 }

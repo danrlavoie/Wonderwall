@@ -27,8 +27,6 @@ MediaPlayer.OnCompletionListener {
 	private MediaPlayer player;
 	//song list
 	private ArrayList<Song> songs;
-	//current position
-	private int songPosn;
 	//binder
 	private final IBinder musicBind = new MusicBinder();
 	//title of current song
@@ -42,14 +40,13 @@ MediaPlayer.OnCompletionListener {
 	public void onCreate(){
 		//create the service
 		super.onCreate();
-		//initialize position
-		songPosn=0;
 		//random
 		rand=new Random();
 		//create player
 		player = new MediaPlayer();
 		//initialize
 		initMusicPlayer();
+        playSong();
 	}
 
 	public void initMusicPlayer(){
@@ -95,27 +92,11 @@ MediaPlayer.OnCompletionListener {
 		player.reset();
 		//get song
         double randomSong = rand.nextDouble();
-        int newSong;
+        Uri trackUri;
         if (randomSong > 0.8) {
-            newSong = 5;
+            trackUri = Uri.parse("android.resource://com.example.musicplayer/raw/wonderwall");
         }
         else {
-            newSong = 2;
-        }
-        setSong(newSong);
-		Song playSong = songs.get(songPosn);
-		//get title
-		songTitle=playSong.getTitle();
-		//get id
-		long currSong = playSong.getID();
-		//set uri
-//		Uri trackUri = ContentUris.withAppendedId(
-//				android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-//				currSong);
-        Uri trackUri;
-        if (currSong == 2) {
-            trackUri = Uri.parse("android.resource://com.example.musicplayer/raw/wonderwall");
-        } else {
             trackUri = Uri.parse("android.resource://com.example.musicplayer/raw/stairway_to_heaven");
         }
 
@@ -127,11 +108,6 @@ MediaPlayer.OnCompletionListener {
 			Log.e("MUSIC SERVICE", "Error setting data source", e);
 		}
 		player.prepareAsync(); 
-	}
-
-	//set the song
-	public void setSong(int songIndex){
-		songPosn=songIndex;	
 	}
 
 	@Override
@@ -228,10 +204,5 @@ MediaPlayer.OnCompletionListener {
 		stopForeground(true);
 	}
 
-	//toggle shuffle
-	public void setShuffle(){
-		if(shuffle) shuffle=false;
-		else shuffle=true;
-	}
 
 }

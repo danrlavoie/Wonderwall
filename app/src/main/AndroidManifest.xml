@@ -17,8 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SongActivity"
+            android:name="group4.wonderwall.SongActivity"
             android:label="@string/title_activity_song" >
+        </activity>
+        <activity
+            android:name="group4.wonderwall.SongChooserActivity"
+            android:label="@string/title_activity_song_chooser" >
         </activity>
     </application>
 

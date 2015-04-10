@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void playSong(View view) {
-        Intent intent = new Intent(this, SongActivity.class);
+        Intent intent = new Intent(this, SongChooserActivity.class);
         //create the intent and start the activity
         startActivity(intent);
 
