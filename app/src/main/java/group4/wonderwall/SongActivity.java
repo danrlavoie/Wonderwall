@@ -32,6 +32,8 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     Integer score = 0;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
+    public final static String SCORE = "edu.rit.Wonderwall.SCORE";
+
 
     /**
      * Initialize the SongActivity, loads views, data binding.
@@ -96,7 +98,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         TextView updateThis = (TextView)findViewById(R.id.score);
         score++;
         updateThis.setText(score.toString());
-
         return true;
     }
 
@@ -231,4 +232,14 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
             }, 0, period);
         }//if
     }
+
+    public void songCompleted(View view) {
+        Intent intent = new Intent(this, SongCompleted.class);
+        //create the intent and start the activity
+        String message = score.toString();
+        intent.putExtra(SCORE, message);
+        startActivity(intent);
+    }
+
+
 }
