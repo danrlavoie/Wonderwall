@@ -1,27 +1,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context="group4.wonderwall.SongActivity" tools:ignore="MergeRootFrame" >
-
-
+    tools:context="group4.wonderwall.SongActivity" tools:ignore="MergeRootFrame"
+    android:background="#000000">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Completed 2e"
+        android:text="Completed"
         android:id="@+id/buttonDone"
         android:layout_gravity="center"
         android:onClick="songCompleted"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/score"
         android:text="000"
-        android:textSize="50dp"/>
+        android:textSize="50dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:textColor="#ffffff" />
+
+
 </FrameLayout>

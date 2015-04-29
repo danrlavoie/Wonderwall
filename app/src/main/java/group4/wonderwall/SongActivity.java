@@ -22,6 +22,8 @@ import android.content.res.Resources;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.widget.Button;
+
 /**
  * SongActivity class contains the functionality to play song.
  * It detects user swipes on the screen and plays song.
@@ -67,6 +69,11 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public boolean onTouchEvent(MotionEvent touchevent)
     {
+/*
+        Button btn = (Button) findViewById(R.id.score);
+        btn.setEnabled(false);
+*/
+
         switch (touchevent.getAction())
         {
             // when user first touches the screen we get x and y coordinate
@@ -100,7 +107,8 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * @return boolean
      */
     public boolean incrementScore(){
-        TextView updateThis = (TextView)findViewById(R.id.score);
+       TextView updateThis = (TextView)findViewById(R.id.score);
+       // Button updateThis = (Button)findViewById(R.id.score);
         score++;
         updateThis.setText(score.toString());
         return true;
