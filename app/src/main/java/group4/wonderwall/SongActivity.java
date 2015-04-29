@@ -82,11 +82,13 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                 if (x1 < x2)
                 {
                     System.out.println("Left to Right Swipe");
+                    strum();
                 }
                 // if right to left sweep event on screen
                 if (x1 > x2)
                 {
                     System.out.println("Right to Left Swipe");
+                    strum();
                 }
             }
         }
@@ -141,8 +143,8 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * Called by strum action listener
      */
     public void strum(){
-
         strumming = true;
+        incrementScore();
     }
 
     /**
@@ -151,7 +153,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     public void progress(){
         //TODO implement song progression
         System.out.println("Song playing");
-        incrementScore();
     }
 
     /**

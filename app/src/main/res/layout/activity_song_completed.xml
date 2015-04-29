@@ -2,31 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="group4.wonderwall.SongCompleted" tools:ignore="MergeRootFrame"
-    android:background="#ffffffff">
+    android:background="@drawable/donemenuresized">
 
     <ImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/imageView"
     android:layout_gravity="center" />
-
-    <TextView
-        android:layout_width="282dp"
-        android:layout_height="177dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="You Did It with a score of "
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal|top"
-        android:textColor="#fffffc0d"
-        android:textSize="@android:dimen/app_icon_size" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView2"
-        android:layout_gravity="center" />
 
     <Button
         android:layout_width="wrap_content"
@@ -35,6 +17,23 @@
         android:id="@+id/button2"
         android:layout_gravity="center_horizontal|bottom"
         android:onClick="mainMenu"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="125dp"
+        android:text="Large Text"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal|bottom"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="156dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Score"
+        android:id="@+id/textView"
+        android:layout_gravity="bottom|center" />
 
 </FrameLayout>
 
