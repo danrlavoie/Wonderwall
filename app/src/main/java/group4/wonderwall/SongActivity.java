@@ -42,13 +42,16 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_song); //places the UI for this activity here
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        setContentView(R.layout.activity_song); //places the UI for this activity here
+
+
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {

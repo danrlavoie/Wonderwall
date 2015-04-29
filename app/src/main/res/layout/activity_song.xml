@@ -3,6 +3,16 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context="group4.wonderwall.SongActivity" tools:ignore="MergeRootFrame" >
 
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completed 2e"
+        android:id="@+id/buttonDone"
+        android:layout_gravity="center"
+        android:onClick="songCompleted"/>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,12 +24,4 @@
         android:id="@+id/score"
         android:text="000"
         android:textSize="50dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Completed"
-        android:id="@+id/buttonDone"
-        android:layout_gravity="center"
-        android:onClick="songCompleted"/>
 </FrameLayout>

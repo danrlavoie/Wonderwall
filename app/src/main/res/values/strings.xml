@@ -7,4 +7,6 @@
     <string name="title_activity_song">SongActivity</string>
     <string name="play_song">Play the Song</string>
     <string name="title_activity_song_completed">SongCompleted</string>
+    <string name="title_activity_score">Score</string>
+
 </resources>
