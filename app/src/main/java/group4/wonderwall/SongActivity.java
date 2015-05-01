@@ -22,8 +22,6 @@ import android.content.res.Resources;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.widget.Button;
-
 /**
  * SongActivity class contains the functionality to play song.
  * It detects user swipes on the screen and plays song.
@@ -32,6 +30,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     private boolean strumming;
     float x1,x2;
     Integer score = 0;
+    int combo = 0;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
     public final static String SCORE = "edu.rit.Wonderwall.SCORE";
@@ -44,16 +43,12 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_song); //places the UI for this activity here
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-        setContentView(R.layout.activity_song); //places the UI for this activity here
-
-
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
@@ -69,11 +64,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public boolean onTouchEvent(MotionEvent touchevent)
     {
-/*
-        Button btn = (Button) findViewById(R.id.score);
-        btn.setEnabled(false);
-*/
-
         switch (touchevent.getAction())
         {
             // when user first touches the screen we get x and y coordinate
@@ -107,9 +97,8 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * @return boolean
      */
     public boolean incrementScore(){
-       TextView updateThis = (TextView)findViewById(R.id.score);
-       // Button updateThis = (Button)findViewById(R.id.score);
-        score++;
+        TextView updateThis = (TextView)findViewById(R.id.score);
+        score+=1+(combo/5);
         updateThis.setText(score.toString());
         return true;
     }
@@ -160,7 +149,9 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public void progress(){
         //TODO implement song progression
+        combo++;
         System.out.println("Song playing");
+        System.out.println("Combo: "+combo/5);
     }
 
     /**
@@ -168,7 +159,9 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public void pause(){
         //TODO implement song pausing
+        combo=0;
         System.out.println("Song stopped");
+        System.out.println("Combo Broken");
     }
 
     /**
@@ -215,7 +208,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
 
         }
     }
-    public void quit(){
+    public void quit(View view){
         finish();
     }
 
