@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +36,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     Timer timer = new Timer();
     public final static String SCORE = "edu.rit.Wonderwall.SCORE";
 
-
     /**
      * Initialize the SongActivity, loads views, data binding.
      * @param savedInstanceState (If app is re-initialized after shut-down, Bundle contains most recent saved state data)
@@ -49,6 +49,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
@@ -100,7 +101,17 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         TextView updateThis = (TextView)findViewById(R.id.score);
         score+=1+(combo/5);
         updateThis.setText(score.toString());
+        updateCombo();
         return true;
+    }
+
+    private void updateCombo() {
+        TextView combotxt = (TextView)findViewById(R.id.combotxt);
+        if(combo<5){
+            combotxt.setText("");
+        }else{
+            combotxt.setText("x"+((combo/5)+1));
+        }
     }
 
     @Override
@@ -162,6 +173,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         combo=0;
         System.out.println("Song stopped");
         System.out.println("Combo Broken");
+        updateCombo();
     }
 
     /**
