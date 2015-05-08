@@ -39,7 +39,12 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     private boolean strumming;
     float x1,x2;
     Integer score = 0;
+<<<<<<< HEAD
     int period = 10000; // repeat every 10 sec.
+=======
+    int combo = 0;
+    int period = 1000; // repeat every 10 sec.
+>>>>>>> 1ee1f97fd95e77dfa0fbfb24a5bb2aa7c98ededf
     Timer timer = new Timer();
     //service
     private MusicService musicService;
@@ -79,12 +84,15 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song); //places the UI for this activity here
+<<<<<<< HEAD
 
         if(playIntent==null){
             playIntent = new Intent(this, MusicService.class);
             bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
             startService(playIntent);
         }
+=======
+>>>>>>> 1ee1f97fd95e77dfa0fbfb24a5bb2aa7c98ededf
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -125,12 +133,14 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                 {
                     incrementScore();
                     System.out.println("Left to Right Swipe");
+                    strum();
                 }
                 // if right to left sweep event on screen
                 if (x1 > x2)
                 {
                     incrementScore();
                     System.out.println("Right to Left Swipe");
+                    strum();
                 }
             }
         }
@@ -143,7 +153,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public boolean incrementScore(){
         TextView updateThis = (TextView)findViewById(R.id.score);
-        score++;
+        score+=1+(combo/5);
         updateThis.setText(score.toString());
         return true;
     }
@@ -185,8 +195,8 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * Called by strum action listener
      */
     public void strum(){
-
         strumming = true;
+        incrementScore();
     }
 
     /**
@@ -194,13 +204,18 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public void progress(){
         //TODO implement song progression
+        combo++;
         System.out.println("Song playing");
+<<<<<<< HEAD
         incrementScore();
         if (musicService != null) {
             if (!musicService.isPng()) {
                 musicService.go();
             }
         }
+=======
+        System.out.println("Combo: "+combo/5);
+>>>>>>> 1ee1f97fd95e77dfa0fbfb24a5bb2aa7c98ededf
     }
 
     /**
@@ -208,12 +223,17 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      */
     public void pause(){
         //TODO implement song pausing
+<<<<<<< HEAD
         if (musicService != null) {
             if (musicService.isPng()) {
                 musicService.pausePlayer();
             }
         }
+=======
+        combo=0;
+>>>>>>> 1ee1f97fd95e77dfa0fbfb24a5bb2aa7c98ededf
         System.out.println("Song stopped");
+        System.out.println("Combo Broken");
     }
 
     /**
@@ -260,7 +280,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
 
         }
     }
-    public void quit(){
+    public void quit(View view){
         finish();
     }
 

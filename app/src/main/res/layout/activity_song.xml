@@ -1,19 +1,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context="com.example.musicplayer.SongActivity" tools:ignore="MergeRootFrame" >
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/score"
-        android:text="000"
-        android:textSize="50dp"/>
+=======
+    tools:context="group4.wonderwall.SongActivity" tools:ignore="MergeRootFrame"
+    android:background="#000000">
+>>>>>>> 1ee1f97fd95e77dfa0fbfb24a5bb2aa7c98ededf
 
     <Button
         android:layout_width="wrap_content"
@@ -22,4 +15,22 @@
         android:id="@+id/buttonDone"
         android:layout_gravity="center"
         android:onClick="songCompleted"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/score"
+        android:text="000"
+        android:textSize="50dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:textColor="#ffffff" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Freebird!"
+        android:id="@+id/buttonFreebird"
+        android:layout_gravity="bottom"
+        android:onClick="quit"
+        android:background="#ffff1209" />
+
 </FrameLayout>
