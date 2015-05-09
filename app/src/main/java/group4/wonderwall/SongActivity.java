@@ -50,6 +50,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
 
         public void onServiceConnected(ComponentName name, IBinder
                 binder) {
+            System.out.println("SERVICE CONNECTED");
             mServ = ((MusicService.ServiceBinder) binder).getService();
         }
 
@@ -85,6 +86,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song); //places the UI for this activity here
+        doBindService();
         Intent music = new Intent();
         music.setClass(this,MusicService.class);
         startService(music);
@@ -222,7 +224,9 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         System.out.println("Song playing");
         incrementScore();
         if (mServ != null) {
+            System.out.print("mServ exists! ");
             if (!mIsPlaying) {
+                System.out.println("...wasn't playing, resuming music");
                 mServ.resumeMusic();
                 mIsPlaying = true;
             }
@@ -234,15 +238,16 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * Song is paused, halt progress
      */
     public void pause(){
-        //TODO implement song pausing
+        System.out.println("Song stopped");
         if (mServ != null) {
+            System.out.print("mServ exists! ");
             if (mIsPlaying) {
+                System.out.println("...was playing, pausing music");
                 mServ.pauseMusic();
                 mIsPlaying = false;
             }
         }
         combo=0;
-        System.out.println("Song stopped");
         System.out.println("Combo Broken");
         updateCombo();
     }
