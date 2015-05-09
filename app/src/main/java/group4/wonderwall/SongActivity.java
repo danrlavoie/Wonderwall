@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -92,7 +93,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
     }
     @Override
     protected void onStart() {
@@ -152,9 +152,24 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                 TextView updateThis = (TextView)findViewById(R.id.score);
                 score+=1+(combo/5);
                 updateThis.setText(score.toString());
+                updateCombo();
             }
         });
         return true;
+    }
+
+    private void updateCombo() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView combotxt = (TextView) findViewById(R.id.combotxt);
+                if (combo < 5) {
+                    combotxt.setText("");
+                } else {
+                    combotxt.setText("x" + ((combo / 5) + 1));
+                }
+            }
+        });
     }
 
     @Override
@@ -229,6 +244,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         combo=0;
         System.out.println("Song stopped");
         System.out.println("Combo Broken");
+        updateCombo();
     }
 
     /**
