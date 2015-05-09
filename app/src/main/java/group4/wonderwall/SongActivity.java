@@ -1,7 +1,11 @@
 package group4.wonderwall;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -23,6 +27,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import group4.wonderwall.MainActivity;
+import group4.wonderwall.MusicController;
+import group4.wonderwall.MusicService;
+import group4.wonderwall.R;
+
 /**
  * SongActivity class contains the functionality to play song.
  * It detects user swipes on the screen and plays song.
@@ -34,8 +43,41 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     int combo = 0;
     int period = 1000; // repeat every 10 sec.
     Timer timer = new Timer();
-    public final static String SCORE = "edu.rit.Wonderwall.SCORE";
+    private boolean mIsBound = false;
+    private boolean mIsPlaying = true;
+    private MusicService mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
 
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            System.out.println("SERVICE CONNECTED");
+            mServ = ((MusicService.ServiceBinder) binder).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }
+
+    //activity and playback pause flags
+    private boolean paused=false, playbackPaused=false;
+
+    public final static String SCORE = "edu.rit.Wonderwall.SCORE";
     /**
      * Initialize the SongActivity, loads views, data binding.
      * @param savedInstanceState (If app is re-initialized after shut-down, Bundle contains most recent saved state data)
@@ -44,12 +86,19 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song); //places the UI for this activity here
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this,MusicService.class);
+        startService(music);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
@@ -57,7 +106,6 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
             }
         }, 0,period);
     }
-
     /**
      * Detects a touch screen swipe. Logs a left or a right swipe.
      * @param touchevent (the touch screen event being processed)
@@ -79,12 +127,14 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                 //if left to right sweep event on screen
                 if (x1 < x2)
                 {
+                    incrementScore();
                     System.out.println("Left to Right Swipe");
                     strum();
                 }
                 // if right to left sweep event on screen
                 if (x1 > x2)
                 {
+                    incrementScore();
                     System.out.println("Right to Left Swipe");
                     strum();
                 }
@@ -98,20 +148,30 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * @return boolean
      */
     public boolean incrementScore(){
-        TextView updateThis = (TextView)findViewById(R.id.score);
-        score+=1+(combo/5);
-        updateThis.setText(score.toString());
-        updateCombo();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView updateThis = (TextView)findViewById(R.id.score);
+                score+=1+(combo/5);
+                updateThis.setText(score.toString());
+                updateCombo();
+            }
+        });
         return true;
     }
 
     private void updateCombo() {
-        TextView combotxt = (TextView)findViewById(R.id.combotxt);
-        if(combo<5){
-            combotxt.setText("");
-        }else{
-            combotxt.setText("x"+((combo/5)+1));
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView combotxt = (TextView) findViewById(R.id.combotxt);
+                if (combo < 5) {
+                    combotxt.setText("");
+                } else {
+                    combotxt.setText("x" + ((combo / 5) + 1));
+                }
+            }
+        });
     }
 
     @Override
@@ -162,6 +222,15 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         //TODO implement song progression
         combo++;
         System.out.println("Song playing");
+        incrementScore();
+        if (mServ != null) {
+            System.out.print("mServ exists! ");
+            if (!mIsPlaying) {
+                System.out.println("...wasn't playing, resuming music");
+                mServ.resumeMusic();
+                mIsPlaying = true;
+            }
+        }
         System.out.println("Combo: "+combo/5);
     }
 
@@ -169,9 +238,16 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
      * Song is paused, halt progress
      */
     public void pause(){
-        //TODO implement song pausing
-        combo=0;
         System.out.println("Song stopped");
+        if (mServ != null) {
+            System.out.print("mServ exists! ");
+            if (mIsPlaying) {
+                System.out.println("...was playing, pausing music");
+                mServ.pauseMusic();
+                mIsPlaying = false;
+            }
+        }
+        combo=0;
         System.out.println("Combo Broken");
         updateCombo();
     }
@@ -231,6 +307,12 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
         this.timer.cancel();
         this.timer = null;
         System.out.println("I have paused and you should not see the timer incrementing");
+        if (mServ != null) {
+            if (mIsPlaying) {
+                mServ.pauseMusic();
+                mIsPlaying = false;
+            }
+        }
         finish();
         //also need to stop the song
     }
@@ -247,7 +329,19 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                     beat();
                 }
             }, 0, period);
-        }//if
+        }
+        if (mServ != null) {
+            if (!mIsPlaying) {
+                mServ.resumeMusic();
+                mIsPlaying = true;
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        doUnbindService();
+        super.onDestroy();
     }
 
     public void songCompleted(View view) {
