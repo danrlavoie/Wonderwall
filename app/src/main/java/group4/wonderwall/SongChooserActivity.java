@@ -18,12 +18,14 @@ public class SongChooserActivity extends Activity{
 	//song list variables
 	private ArrayList<Song> songList;
 	private ListView songView;
+    public static String instrument = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.songlist);
-
+        this.instrument = MainActivity.instrument;
+        System.out.println("SONG CHOOSER'S INSTRUMENT IS: " +this.instrument);
 		//retrieve list view
 		songView = (ListView)findViewById(R.id.song_list);
 		//instantiate list

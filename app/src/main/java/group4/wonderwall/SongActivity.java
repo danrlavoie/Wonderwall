@@ -277,19 +277,20 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
             View rootView = inflater.inflate(R.layout.fragment_song, container, false);
 
             //code that gets the instrument selected and changes the background image
-            String inst = MainActivity.instrument;
+            String inst = SongChooserActivity.instrument;
+            System.out.println("SONG CHOOSER ACTIVITY INSTRUMENT: " + inst);
             if(inst.equals("Guitar")){
                 Resources res = getResources();
                 Drawable drawableG = res.getDrawable(R.drawable.guitar);
                 rootView.setBackground(drawableG);
-                System.out.println("Guitar selected");
+                System.out.println("!!!!!!!!!!!!Guitar selected");
                 return rootView;
             }
             else if(inst.equals("Bass")){
                 Resources res = getResources();
                 Drawable drawableB = res.getDrawable(R.drawable.bass);
                 rootView.setBackground(drawableB);
-                System.out.println("Bass selected");
+                System.out.println("!!!!!!!!!!!!!Bass selected");
                 return rootView;
             }
             return null;
