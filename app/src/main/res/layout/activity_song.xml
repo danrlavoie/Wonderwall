@@ -1,12 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
     android:layout_width="match_parent" android:layout_height="match_parent"
-<<<<<<< HEAD
-    tools:context="com.example.musicplayer.SongActivity" tools:ignore="MergeRootFrame" >
-=======
     tools:context="group4.wonderwall.SongActivity" tools:ignore="MergeRootFrame"
     android:background="#000000">
->>>>>>> 1ee1f97fd95e77dfa0fbfb24a5bb2aa7c98ededf
 
     <Button
         android:layout_width="wrap_content"
