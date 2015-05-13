@@ -41,7 +41,7 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
     float x1,x2;
     Integer score = 0;
     int combo = 0;
-    int period = 1000; // repeat every 10 sec.
+    int period = 250; // repeat every 10 sec.
     Timer timer = new Timer();
     private boolean mIsBound = false;
     private boolean mIsPlaying = true;
