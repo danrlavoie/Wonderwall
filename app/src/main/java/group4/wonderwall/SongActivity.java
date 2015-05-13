@@ -285,14 +285,14 @@ public class SongActivity extends ActionBarActivity { //implements View.OnClickL
                 System.out.println("Guitar selected");
                 return rootView;
             }
-            else if(inst.equals("Bass")){
+            else{
                 Resources res = getResources();
                 Drawable drawableB = res.getDrawable(R.drawable.bass);
                 rootView.setBackground(drawableB);
                 System.out.println("Bass selected");
                 return rootView;
             }
-            return null;
+            //return null;
 
         }
     }
