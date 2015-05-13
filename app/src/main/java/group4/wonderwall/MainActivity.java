@@ -19,7 +19,7 @@ import android.graphics.Color;
 public class MainActivity extends ActionBarActivity {
 
     private RadioGroup instrumentGroup;
-    public static String instrument = "";
+    public static String instrument = "Guitar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +69,12 @@ public class MainActivity extends ActionBarActivity {
             int buttonId= instrumentGroup.getCheckedRadioButtonId();
 
             System.out.println("button id: "+ buttonId);
-            if(buttonId == 2131230785){
+            if(buttonId == 2131296321){
                 System.out.println("Selecting Guitar.");
 
                 instrument = "Guitar";
             }
-            else if(buttonId == 2131230786){
+            else if(buttonId == 2131296322){
                 System.out.println("Selecting Bass.");
 
                 instrument = "Bass";
